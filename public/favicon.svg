@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <!-- Filtros de sombra y brillo -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    
+    <!-- Gradientes de color con efecto iluminado -->
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4ade80"/>
+      <stop offset="100%" stop-color="#15803d"/>
+    </linearGradient>
+    <linearGradient id="redGrad" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f87171"/>
+      <stop offset="100%" stop-color="#b91c1c"/>
+    </linearGradient>
+    <linearGradient id="yellowGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#facc15"/>
+      <stop offset="100%" stop-color="#a16207"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="100%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#60a5fa"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    
+    <!-- Gradiente para el chasis y centro -->
+    <radialGradient id="centerGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="70%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </radialGradient>
+    
+    <radialGradient id="hubGrad" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Base / Chasis Simon Dice -->
+  <circle cx="32" cy="32" r="31" fill="#090d16" stroke="#1e293b" stroke-width="1.5" filter="url(#shadow)"/>
+  
+  <!-- Cuadrante Verde (Superior Izquierdo) -->
+  <path d="M 30 5.2 A 26.8 26.8 0 0 0 5.2 30 L 16.5 30 A 15.5 15.5 0 0 1 30 16.5 Z" 
+        fill="url(#greenGrad)" rx="2"/>
+  
+  <!-- Cuadrante Rojo (Superior Derecho) -->
+  <path d="M 34 5.2 A 26.8 26.8 0 0 1 58.8 30 L 47.5 30 A 15.5 15.5 0 0 0 34 16.5 Z" 
+        fill="url(#redGrad)" rx="2"/>
+  
+  <!-- Cuadrante Amarillo (Inferior Izquierdo) -->
+  <path d="M 5.2 34 A 26.8 26.8 0 0 0 30 58.8 L 30 47.5 A 15.5 15.5 0 0 1 16.5 34 Z" 
+        fill="url(#yellowGrad)" rx="2"/>
+        
+  <!-- Cuadrante Azul (Inferior Derecho) -->
+  <path d="M 58.8 34 A 26.8 26.8 0 0 1 34 58.8 L 34 47.5 A 15.5 15.5 0 0 0 47.5 34 Z" 
+        fill="url(#blueGrad)" rx="2"/>
+
+  <!-- Centro / Consola Central -->
+  <circle cx="32" cy="32" r="14" fill="url(#centerGrad)" stroke="#090d16" stroke-width="2.5"/>
+  <circle cx="32" cy="32" r="9.5" fill="url(#hubGrad)" stroke="#475569" stroke-width="1"/>
+  
+  <!-- Mini Icono / Botón central estilo Simon -->
+  <circle cx="32" cy="32" r="4.5" fill="#38bdf8" opacity="0.9"/>
+  <circle cx="30.8" cy="30.8" r="1.5" fill="#ffffff" opacity="0.8"/>
+</svg>

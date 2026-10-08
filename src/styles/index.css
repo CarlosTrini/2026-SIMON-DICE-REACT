@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+  }
+
+  body {
+    background-color: #0b0f19;
+    color: #f3f4f6;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+  }
+}
+
+
+:root {
+  --color-primary: #132247;
+  --color-primary-dark: #091125;
+  --color-secondary: #337ab7;
+  --color-tertiary: #a6ff00;
+  --color-light: #eee8e8;
+  --color-quaternary: #386fd4;
+
+  --color-red: #ff1414;
+  --color-green: #29d309;
+  --color-blue: #0d4dff;
+  --color-yellow: #fccc0f;
+  --color-orange: #ffa500;
+  --color-pink: #e634da;
+  --color-black: #050505;
+  --color-white: #ffffff;
+  --color-gray: #9ca3af;
+}
+
+@theme {
+  --color-primary: var(--color-primary);
+  --color-primary-dark: var(--color-primary-dark);
+  --color-secondary: var(--color-secondary);
+  --color-tertiary: var(--color-tertiary);
+  --color-light: var(--color-light);
+  --color-quaternary: var(--color-quaternary);
+}
+
+/* 3D Simon Button Effects */
+.button-simon {
+  position: relative;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  background-color: var(--btn-color);
+  box-shadow: 0 8px 0 var(--btn-shadow), 0 14px 20px rgba(0, 0, 0, 0.4);
+  transform: translateY(0);
+  transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.15s ease;
+
+  &:hover {
+    filter: brightness(1.08);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 0 var(--btn-shadow), 0 18px 24px rgba(0, 0, 0, 0.45);
+  }
+
+  &:active {
+    transform: translateY(6px);
+    box-shadow: 0 2px 0 var(--btn-shadow), 0 4px 10px rgba(0, 0, 0, 0.3);
+    filter: brightness(1.18);
+  }
+}
+
+.active-btn {
+  transform: translateY(6px) scale(0.97) !important;
+  box-shadow: 0 2px 0 var(--btn-shadow), 0 0 25px var(--btn-color), 0 0 50px var(--btn-color) !important;
+  filter: brightness(1.7) saturate(1.3) !important;
+  border-color: rgba(255, 255, 255, 0.85) !important;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease !important;
+}
+
+.button-simon-red {
+  --btn-color: var(--color-red);
+  --btn-shadow: #e11d48;
+}
+
+.button-simon-green {
+  --btn-color: var(--color-green);
+  --btn-shadow: #059669;
+}
+
+.button-simon-blue {
+  --btn-color: var(--color-blue);
+  --btn-shadow: #137fb6;
+}
+
+.button-simon-yellow {
+  --btn-color: var(--color-yellow);
+  --btn-shadow: #d97706;
+}
+
+.button-simon-orange {
+  --btn-color: var(--color-orange);
+  --btn-shadow: #ea580c;
+}
+
+.button-simon-pink {
+  --btn-color: var(--color-pink);
+  --btn-shadow: #db2777;
+}
+
+.button-simon-black {
+  --btn-color: var(--color-black);
+  --btn-shadow: #050505;
+}
+
+.button-simon-white {
+  --btn-color: var(--color-white);
+  --btn-shadow: #ffffff;
+}
+
+.button-simon-gray {
+  --btn-color: var(--color-gray);
+  --btn-shadow: #9ca3af;
+}
