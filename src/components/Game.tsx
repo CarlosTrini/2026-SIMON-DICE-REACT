@@ -59,7 +59,7 @@ const Game = () => {
 
         if (playersInfo.length == 2) { // DOS, YA QUE SI SOLO ES UN JUGADOR, PLAYERS TIENE DOS: MACHINE Y JUGADOR
             title = '¡Oops! Fallaste ' + currentPlayer?.player + ' 😪'
-            text = `Lograste hacer ${currentPlayer?.points} puntos. ${currentPlayer?.points > 1 ? ' 🎉' : ''}`
+            text = `Lograste hacer ${currentPlayer?.points} puntos. ${currentPlayer?.points! > 1 ? ' 🎉' : ''}`
         }
         else if (playersInfo.length == 3) { // DOS O MÁS JUGADORES MÁS MACHINE...
             title = isTie ?

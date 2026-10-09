@@ -133,6 +133,7 @@ export const GameProvider: React.FC<GameProviderI> = ({ children }) => {
     // FN INTERNAS
 
     const changeNextPlayer = () => {
+        if (!currentPlayer) return;
         if (playersInfo[currentPlayer.id + 1]) {
             setNextPlayer(playersInfo.find(p => p.id === (currentPlayer.id + 1))!);
         } else {
