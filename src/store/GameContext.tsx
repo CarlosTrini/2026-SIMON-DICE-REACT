@@ -38,9 +38,9 @@ interface GameProviderI {
 }
 
 const colorsByLevel: Record<Level, Colors[]> = {
-    'easy': ['red', 'green', 'blue'],
-    'normal': ['red', 'green', 'blue', 'yellow'],
-    'hard': ['red', 'green', 'blue', 'yellow', 'orange', 'pink'],
+    'easy': ['red', 'green', 'blue', 'yellow'],
+    'normal': ['red', 'green', 'blue', 'yellow', 'orange'],
+    'hard': ['red', 'green', 'blue', 'yellow', 'orange', 'pink', 'black'],
     'crazy': ['red', 'green', 'blue', 'yellow', 'orange', 'pink', 'black', 'white', 'gray']
 };
 

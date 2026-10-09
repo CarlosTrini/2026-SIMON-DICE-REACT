@@ -62,7 +62,7 @@ const Game = () => {
 
         if (playersInfo.length == 2) { // DOS, YA QUE SI SOLO ES UN JUGADOR, PLAYERS TIENE DOS: MACHINE Y JUGADOR
             title = '¡Oops! Fallaste ' + currentPlayer?.player + ' 😪'
-            text = `Lograste hacer ${currentPlayer?.points} puntos. 🎉`
+            text = `Lograste hacer ${currentPlayer?.points} puntos. ${currentPlayer?.points > 1 ? ' 🎉' : ''}`
         }
         else if (playersInfo.length == 3) { // DOS O MÁS JUGADORES MÁS MACHINE...
             title = isTie ?
@@ -187,7 +187,7 @@ const Game = () => {
     const createButtonColor = (color: Colors) => {
 
         return (
-            <button key={color} id={`btn-${color}`} className={`button-simon button-simon-${color} w-20 sm:w-30 md:w-40 max-w-40 h-20 sm:h-30 md:h-40 lg:h-40`}
+            <button key={color} id={`btn-${color}`} className={`button-simon button-simon-${color} w-25 sm:w-30 md:w-40 max-w-40 h-25 sm:h-30 md:h-40 lg:h-40`}
                 onClick={(e) => {
 
 
@@ -212,7 +212,9 @@ const Game = () => {
                 isGameInit && (
 
                     <section>
-                        <div className="flex flex-wrap justify-center items-center mx-auto gap-8 mt-8 ">
+                        {/* <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-8 mt-8 w-fit mx-auto"> */}
+                        <div className="flex flex-wrap justify-evenly gap-4 md:gap-8 mt-8 w-fit mx-auto lg:max-w-xl xl:max-w-3xl">
+
                             {
                                 colorsByLevel[level].map((color) => (
                                     createButtonColor(color)

@@ -46,7 +46,7 @@
 }
 
 /* 3D Simon Button Effects */
-.button-simon {
+/* .button-simon {
   position: relative;
   border-radius: 1.25rem;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -77,7 +77,90 @@
   filter: brightness(1.7) saturate(1.3) !important;
   border-color: rgba(255, 255, 255, 0.85) !important;
   transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease !important;
+} */
+
+
+/* =========================================================
+   OPCIÓN 1: ARCADE GLOSSY 3D (Cúpula con reflejo de luz)
+   ========================================================= */
+.button-simon {
+  position: relative;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  overflow: hidden;
+  background-color: var(--btn-color);
+  /* Biseles de luz superior e inferior para volumen real */
+  background-image: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.45) 0%,
+      rgba(255, 255, 255, 0.1) 40%,
+      rgba(0, 0, 0, 0.15) 80%,
+      rgba(0, 0, 0, 0.35) 100%);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow:
+    inset 0 3px 6px rgba(255, 255, 255, 0.6),
+    inset 0 -4px 8px rgba(0, 0, 0, 0.4),
+    0 8px 0 var(--btn-shadow),
+    0 16px 24px rgba(0, 0, 0, 0.55);
+  transform: translateY(0);
+  transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.12s ease,
+    filter 0.15s ease;
+
+  /* Destello de brillo elíptico en la parte superior */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 10%;
+    right: 10%;
+    height: 38%;
+    border-radius: 9999px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%);
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+  }
+
+  &:hover {
+    filter: brightness(1.1);
+    transform: translateY(-3px);
+    box-shadow:
+      inset 0 3px 6px rgba(255, 255, 255, 0.7),
+      inset 0 -4px 8px rgba(0, 0, 0, 0.4),
+      0 11px 0 var(--btn-shadow),
+      0 20px 28px rgba(0, 0, 0, 0.6);
+  }
+
+  &:active {
+    transform: translateY(6px);
+    box-shadow:
+      inset 0 2px 4px rgba(255, 255, 255, 0.3),
+      inset 0 -2px 6px rgba(0, 0, 0, 0.5),
+      0 2px 0 var(--btn-shadow),
+      0 6px 12px rgba(0, 0, 0, 0.4);
+    filter: brightness(1.2);
+  }
 }
+
+.active-btn {
+  transform: translateY(6px) scale(0.97) !important;
+  border-color: rgba(255, 255, 255, 0.95) !important;
+  box-shadow:
+    inset 0 0 20px rgba(255, 255, 255, 0.9),
+    inset 0 0 35px var(--btn-color),
+    0 2px 0 var(--btn-shadow),
+    0 0 30px var(--btn-color),
+    0 0 60px var(--btn-color) !important;
+  filter: brightness(1.8) saturate(1.4) !important;
+  transition: all 0.1s ease !important;
+
+  &::before {
+    opacity: 0.9;
+    background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.4) 100%) !important;
+  }
+}
+
 
 .button-simon-red {
   --btn-color: var(--color-red);
