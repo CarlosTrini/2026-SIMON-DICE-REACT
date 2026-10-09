@@ -1,5 +1,10 @@
 # Simon Dice 
 > Un juego clásico de simon dice con modo multijugador y diferentes dificultades
+> En pantalla puedes ver:
+> - ¿Qué jugador sigue?
+> - Puntajes que tienen o tienes
+> - Cantidad de jugadores
+> - Número de ronda
 
 
 ## Demo 
