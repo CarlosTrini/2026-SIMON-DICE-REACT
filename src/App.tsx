@@ -3,11 +3,13 @@ import { useGameContext } from '@/store/GameContext'
 
 import simondiceimage from './assets/simondiceimage.jpg';
 import { Trophy, User } from 'lucide-react';
+import { useMemo } from 'react';
 
 export function App() {
 
-  const { currentPlayer, isGameInit } = useGameContext();
+  const { currentPlayer, isGameInit, round, playersNumber } = useGameContext();
 
+  // const playersInfo = useMemo(() => playersInfo.filter(p => p.player != 'simon').length, playersInfo);
 
   return (
     <>
@@ -42,8 +44,16 @@ export function App() {
           {/* INFO GAME */}
           {
             isGameInit && (
-              <section>
-                <div className="flex lg:flex-col xl:flex-row gap-8 bg-quinary  justify-center border-b border-tertiary/50">
+              <section className='w-full'>
+
+                <div className='flex w-full justify-between'>
+                  <p className='text-xl font-bold italic underline underline-offset-5 mb-2 lg:mb-4'>Ronda: <span className='text-tertiary'>{round}</span></p>
+                  <p className='text-xl font-bold italic underline underline-offset-5 mb-2 lg:mb-4'>Jugadores: <span className='text-tertiary'>{playersNumber == 1 ? 'Solo tú' : playersNumber}</span></p>
+                </div>
+
+
+                {/* JUGADOR ACTUAL / TURNO - PUNTOS */}
+                <div className="flex lg:flex-col xl:flex-row gap-8 bg-quinary  justify-center p-2 w-full border-2 border-tertiary/50 border-dashed">
 
                   <p
                     className="flex items-center gap-1 font-bold text-lg text-slate-300 hover:text-white transition-colors"
@@ -61,7 +71,13 @@ export function App() {
                     </p>
                   }
                 </div>
+
+                <div>
+                  {/* JUGADOR SIGUIENTE / NOMBRE - PUNTOS */}
+
+                </div>
               </section>
+
 
             )
           }

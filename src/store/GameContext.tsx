@@ -18,7 +18,9 @@ interface GameContextI {
     playersInfo: Player[];
     timer: number;
     isGameInit: boolean;
+    nextPlayer: Player | null;
     colorsByLevel: Record<Level, Colors[]>
+    round: number;
     // lógica
     handleStartGame: () => void;
     handleUpdatePointsPlayer: (id: number | undefined) => void;
@@ -28,6 +30,7 @@ interface GameContextI {
     createSequence: () => void;
     setCurrentPlayer: (player: Player) => void;
     handleFinishGame: () => void;
+
 
 }
 
@@ -54,6 +57,8 @@ export const GameProvider: React.FC<GameProviderI> = ({ children }) => {
     const [playersNumber, setPlayersNumber] = useState(1);
     const [currentPlayer, setCurrentPlayer] = useState<Player | null>(null);
     const [isGameInit, setIsGameInit] = useState(false);
+    const [round, setRound] = useState(0);
+    const [nextPlayer, setNextPlayer] = useState<Player | null>(null);
 
     const handleFinishGame = () => {
 
@@ -67,6 +72,7 @@ export const GameProvider: React.FC<GameProviderI> = ({ children }) => {
         setTimer(0);
         setCurrentPlayer(null);
         setSequence([]);
+        setRound(0);
         setIsGameInit(false);
     }
 
@@ -82,7 +88,6 @@ export const GameProvider: React.FC<GameProviderI> = ({ children }) => {
         setTimer(0);
         setIsGameInit(true);
     }
-
     const handleUpdatePointsPlayer = (id: number | undefined) => {
         if (id == undefined) return;
         setPlayersInfo(prev => {
@@ -98,6 +103,7 @@ export const GameProvider: React.FC<GameProviderI> = ({ children }) => {
             return updatePlayers
         })
     }
+
 
 
     // FN INTERNAS
@@ -117,6 +123,7 @@ export const GameProvider: React.FC<GameProviderI> = ({ children }) => {
 
     const createSequence = () => {
         //crear primera secuencia en base a nivel seleccionado
+        setRound(prev => prev + 1);
         const difficultySequence = {
             'easy': 2,
             'normal': 4,
@@ -136,7 +143,7 @@ export const GameProvider: React.FC<GameProviderI> = ({ children }) => {
 
     return (
         <GameContext.Provider value={{
-            sequence, level, playersInfo, timer, playersNumber, currentPlayer, isGameInit,
+            nextPlayer, round, sequence, level, playersInfo, timer, playersNumber, currentPlayer, isGameInit,
             handleFinishGame, handleStartGame, handleUpdatePointsPlayer, handleAddPlayers, setPlayersNumber, setLevel, colorsByLevel, createSequence, setCurrentPlayer
         }}>
             {children}
