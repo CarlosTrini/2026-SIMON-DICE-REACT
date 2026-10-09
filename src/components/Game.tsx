@@ -5,9 +5,8 @@ import Swal from 'sweetalert2';
 import confetti from 'canvas-confetti';
 
 
-
 const Game = () => {
-    const { playersInfo, isGameInit, sequence, colorsByLevel, level, currentPlayer, setCurrentPlayer, createSequence, handleFinishGame, handleUpdatePointsPlayer } = useGameContext();
+    const { playersInfo, isGameInit, sequence, colorsByLevel, level, currentPlayer, handleChangePlayer, handleFinishGame, handleUpdatePointsPlayer } = useGameContext();
 
 
     const [clicksIndexPlayer, setClicksIndexPlayer] = useState<number>(0);
@@ -24,9 +23,6 @@ const Game = () => {
         });
     };
     // CONFETTI ANIMACIÓN FIN
-
-
-
 
     const handleClickButton = (btn: HTMLButtonElement) => {
         //animación en click
@@ -52,7 +48,8 @@ const Game = () => {
         // aqui se equivoco en algún color
 
         const sortedByPoints = playersInfo.sort((a, b) => b.points - a.points).slice(0, -1); // remueve la maquina
-        const allZero = sortedByPoints.every((p) => p.points === 0);
+        // const allZero = sortedByPoints.every((p) => p.points === 0);
+        const allEquals = sortedByPoints.every(p => p.points === sortedByPoints[0].points);
         const winner = sortedByPoints[0];
         const loser = sortedByPoints[sortedByPoints.length - 1]; // porque el último es la maquina, ya que esa no suma puntos y es cero
         const isTie = winner.points == loser.points;
@@ -72,7 +69,7 @@ const Game = () => {
             text = isTie ? '' : `${loser.player} lo siento, será para la próxima 😅`
         }
         else if (playersInfo.length >= 4) { // TRES O MÁS JUGADORES MÁS MACHINE...
-            title = allZero ? 'Nadie ganó... Todos en 0 😅' : `${winner.player} es el ganador con ${winner.points} puntos! 🎉🏆`
+            title = allEquals ? `Empate con ${winner.points} puntos! 😅` : `${winner.player} es el ganador con ${winner.points} puntos! 🎉🏆`
             text = `Lo siento, el juego terminó por culpa de ${currentPlayer?.player} 😪`
         }
 
@@ -104,32 +101,11 @@ const Game = () => {
             //llegó al final y acertó ... sumar puntos y cmbiar usuario
             handleUpdatePointsPlayer(currentPlayer?.id);
             setClicksIndexPlayer(0);
-            changePlayer();
+            handleChangePlayer();
             triggerConfetti();
         }
 
-
-
-
     }
-
-    // CAMBIAR DE TURNOS
-    const changePlayer = () => {
-        //revisar cantidad de jugadores y aumentar
-        setTimeout(() => {
-            if (!currentPlayer) return;
-
-            if (playersInfo[currentPlayer.id + 1]) {
-                // aún hay otro jugador... cambia
-                setCurrentPlayer(playersInfo.find(p => p.id === (currentPlayer.id + 1))!);
-            } else {
-                // no hay más jugadores.... vuelve a la máquina
-                setCurrentPlayer(playersInfo[0]);
-                createSequence(); // crea nueva secuencia o la acumula
-            }
-        }, 1200)
-    }
-
 
     const executeSequence = async (sequence: Colors[]): Promise<boolean> => {
         // se retorna como promesa para tener más 'control' del timeout y flujo
@@ -158,7 +134,7 @@ const Game = () => {
 
         const initExecuteSequence = async () => {
             await executeSequence(sequence); // espera a que la maquina termine para cambiar de jugador
-            changePlayer();
+            handleChangePlayer();
         }
 
         if (isGameInit) {
@@ -210,18 +186,20 @@ const Game = () => {
 
             {
                 isGameInit && (
+                    <>
 
-                    <section>
-                        {/* <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-8 mt-8 w-fit mx-auto"> */}
-                        <div className="flex flex-wrap justify-evenly gap-4 md:gap-8 mt-8 w-fit mx-auto lg:max-w-xl xl:max-w-3xl">
+                        <section>
+                            {/* <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-8 mt-8 w-fit mx-auto"> */}
+                            <div className="flex flex-wrap justify-evenly gap-4 md:gap-8 mt-8 w-fit mx-auto lg:max-w-xl xl:max-w-3xl">
 
-                            {
-                                colorsByLevel[level].map((color) => (
-                                    createButtonColor(color)
-                                ))
-                            }
-                        </div>
-                    </section>
+                                {
+                                    colorsByLevel[level].map((color) => (
+                                        createButtonColor(color)
+                                    ))
+                                }
+                            </div>
+                        </section>
+                    </>
                 )
             }
 

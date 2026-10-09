@@ -3,13 +3,10 @@ import { useGameContext } from '@/store/GameContext'
 
 import simondiceimage from './assets/simondiceimage.jpg';
 import { Trophy, User } from 'lucide-react';
-import { useMemo } from 'react';
 
 export function App() {
 
-  const { currentPlayer, isGameInit, round, playersNumber } = useGameContext();
-
-  // const playersInfo = useMemo(() => playersInfo.filter(p => p.player != 'simon').length, playersInfo);
+  const { currentPlayer, isGameInit, round, playersNumber, nextPlayer, playersInfo } = useGameContext();
 
   return (
     <>
@@ -26,7 +23,7 @@ export function App() {
               <img
                 src={simondiceimage}
                 alt="Simón Dice Juego de Memoria"
-                className="relative w-30 h-30 sm:w-45 sm:h-45 md:w-90 md:h-40 lg:w-50 rounded-2xl border border-white/10 shadow-2xl shadow-black/60"
+                className="relative w-18 h-18 sm:w-30 sm:h-30 md:w-90 md:h-40 lg:w-50 rounded-2xl border border-white/10 shadow-2xl shadow-black/60"
               />
             </figure>
             <article className="flex flex-col mt-4 gap-2 text-center md:text-left ">
@@ -41,19 +38,61 @@ export function App() {
               </p>
             </article>
           </section>
-          {/* INFO GAME */}
+
+
           {
+            //  INFO GAME 
             isGameInit && (
               <section className='w-full'>
 
-                <div className='flex w-full justify-between'>
-                  <p className='text-xl font-bold italic underline underline-offset-5 mb-2 lg:mb-4'>Ronda: <span className='text-tertiary'>{round}</span></p>
-                  <p className='text-xl font-bold italic underline underline-offset-5 mb-2 lg:mb-4'>Jugadores: <span className='text-tertiary'>{playersNumber == 1 ? 'Solo tú' : playersNumber}</span></p>
+
+                {/* CANTIDAD JUGADORES */}
+                <p className='text-xl font-bold italic underline underline-offset-5 mb-3 lg:mb-4'>Jugadores: <span className='text-tertiary'>{playersNumber == 1 ? 'Solo tú' : playersNumber}</span></p>
+
+
+                {/* PUNTAJE */}
+                <div className='p-1 md:p-3 border-4 border-dotted border-tertiary mb-3'>
+                  <p className='text-lg font-bold italic underline mb-2 md:mb-4 text-center'>Puntaje:</p>
+                  <div className='flex gap-2 flex-wrap justify-around'>
+                    {
+                      playersInfo.filter((player) => player.player !== 'simon').map((player, idx) => (
+                        <p key={idx} className='flex items-center gap-1 text-lg font-bold text-slate-300 hover:text-white transition-colors'>
+                          <Trophy className='w-4 h-4' />
+                          {player.player}: <span className='text-tertiary'>{player.points}</span>
+                        </p>
+                      ))
+                    }
+                  </div>
                 </div>
 
 
-                {/* JUGADOR ACTUAL / TURNO - PUNTOS */}
-                <div className="flex lg:flex-col xl:flex-row gap-8 bg-quinary  justify-center p-2 w-full border-2 border-tertiary/50 border-dashed">
+                {/* JUGADOR SIGUIENTE */}
+                <div className='lg:mt-4'>
+                  <p
+                    className="flex items-center gap-1 font-bold text-lg text-slate-300 hover:text-white transition-colors"
+                  >
+                    <User className='w-4 h-4' />
+                    Siguiente: <span className="ml-1 text-tertiary uppercase">{nextPlayer?.player} </span>
+                  </p>
+                </div>
+
+
+
+
+              </section>
+
+
+            )
+          }
+        </section>
+
+        <section className="h-full lg:col-span-6 xl:col-span-6 mx-autow-full flex flex-col items-center justify-center relative ">
+          {
+            isGameInit && (
+              <>
+
+                {/* JUGADOR ACTUAL / TURNO - PUNTOS  */}
+                <section className="lg:absolute top-0 flex flex-col md:flex-row items-center  justify-center py-2 md:py-4 w-full gap-2 md:gap-8 bg-secondary/50 ">
 
                   <p
                     className="flex items-center gap-1 font-bold text-lg text-slate-300 hover:text-white transition-colors"
@@ -70,20 +109,12 @@ export function App() {
                       Puntos: <span className="ml-1 text-tertiary">{currentPlayer?.points} </span>
                     </p>
                   }
-                </div>
+                </section>
 
-                <div>
-                  {/* JUGADOR SIGUIENTE / NOMBRE - PUNTOS */}
-
-                </div>
-              </section>
-
-
+                <p className='text-xl font-bold italic underline underline-offset-5 m-2 md:m-4 uppercase'>Ronda: &nbsp; <span className='text-tertiary'>{round}</span></p>
+              </>
             )
           }
-        </section>
-
-        <section className="h-full lg:col-span-6 xl:col-span-6 mx-autow-full flex items-center justify-center ">
 
           <Game />
         </section>

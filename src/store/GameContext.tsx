@@ -30,6 +30,7 @@ interface GameContextI {
     createSequence: () => void;
     setCurrentPlayer: (player: Player) => void;
     handleFinishGame: () => void;
+    handleChangePlayer: () => void;
 
 
 }
@@ -60,6 +61,7 @@ export const GameProvider: React.FC<GameProviderI> = ({ children }) => {
     const [round, setRound] = useState(0);
     const [nextPlayer, setNextPlayer] = useState<Player | null>(null);
 
+    //Reinicia el juego
     const handleFinishGame = () => {
 
         if (playersNumber == 1) {
@@ -76,6 +78,7 @@ export const GameProvider: React.FC<GameProviderI> = ({ children }) => {
         setIsGameInit(false);
     }
 
+    //incia el juego
     const handleStartGame = () => {
         createSequence();
         setLevel(level);
@@ -88,6 +91,8 @@ export const GameProvider: React.FC<GameProviderI> = ({ children }) => {
         setTimer(0);
         setIsGameInit(true);
     }
+
+    //Actualiza puntos del jugador
     const handleUpdatePointsPlayer = (id: number | undefined) => {
         if (id == undefined) return;
         setPlayersInfo(prev => {
@@ -96,6 +101,8 @@ export const GameProvider: React.FC<GameProviderI> = ({ children }) => {
             return playerUpdate
         })
     }
+
+    //Agrega nombre de jugadores
     const handleAddPlayers = (playerName: string, idx: number) => {
         setPlayersInfo(prev => {
             const updatePlayers = [...prev]
@@ -104,9 +111,35 @@ export const GameProvider: React.FC<GameProviderI> = ({ children }) => {
         })
     }
 
+    // CAMBIAR DE TURNOS
+    const handleChangePlayer = () => {
+        //revisar cantidad de jugadores y aumentar
+        setTimeout(() => {
+            if (!currentPlayer) return;
+
+            if (playersInfo[currentPlayer.id + 1]) {
+                // aún hay otro jugador... cambia
+                setCurrentPlayer(playersInfo.find(p => p.id === (currentPlayer.id + 1))!);
+            } else {
+                // no hay más jugadores.... vuelve a la máquina
+                setCurrentPlayer(playersInfo[0]);
+                createSequence(); // crea nueva secuencia o la acumula
+            }
+        }, 1200)
+    }
+
 
 
     // FN INTERNAS
+
+    const changeNextPlayer = () => {
+        if (playersInfo[currentPlayer.id + 1]) {
+            setNextPlayer(playersInfo.find(p => p.id === (currentPlayer.id + 1))!);
+        } else {
+            setNextPlayer(playersInfo[0]);
+        }
+    }
+
     const createLengthUsers = () => {
         // crea el arrar de jugadores cuando cambia el número de jugadores agregados al iniciar la pantalla
         playersNumber == 0
@@ -136,15 +169,19 @@ export const GameProvider: React.FC<GameProviderI> = ({ children }) => {
     }
 
     useEffect(() => {
-
         createLengthUsers();
     }, [playersNumber])
+
+    useEffect(() => {
+        if (!currentPlayer) return;
+        changeNextPlayer();
+    }, [currentPlayer])
 
 
     return (
         <GameContext.Provider value={{
             nextPlayer, round, sequence, level, playersInfo, timer, playersNumber, currentPlayer, isGameInit,
-            handleFinishGame, handleStartGame, handleUpdatePointsPlayer, handleAddPlayers, setPlayersNumber, setLevel, colorsByLevel, createSequence, setCurrentPlayer
+            handleFinishGame, handleStartGame, handleChangePlayer, handleUpdatePointsPlayer, handleAddPlayers, setPlayersNumber, setLevel, colorsByLevel, createSequence, setCurrentPlayer
         }}>
             {children}
         </GameContext.Provider>
